@@ -176,8 +176,10 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  const strArr = str.split('');
+  const arr = strArr.filter((el) => !(str.split(el).length - 2))[0] || null;
+  return arr;
 }
 
 
@@ -203,8 +205,11 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const firstQ = isStartIncluded ? '[' : '(';
+  const secondQ = isEndIncluded ? ']' : ')';
+  const sort = [a, b].sort((x, y) => x - y);
+  return `${firstQ}${sort[0]}, ${sort[1]}${secondQ}`;
 }
 
 
@@ -309,8 +314,25 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const arr = str.split('');
+  const brackets = ['[', ']', '(', ')', '{', '}', '<', '>'];
+  const stack = [];
+  arr.forEach((item) => {
+    const index = brackets.indexOf(item);
+    if (index === 0 || index % 2 === 0) {
+      stack.push(item);
+    } else if (index % 2 !== 0 && stack.length !== 0) {
+      if (stack[stack.length - 1] === brackets[index - 1]) {
+        stack.pop();
+      } else {
+        stack.push(item);
+      }
+    } else {
+      stack.push(item);
+    }
+  });
+  return stack.length === 0;
 }
 
 
@@ -334,8 +356,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 

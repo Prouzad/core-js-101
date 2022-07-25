@@ -335,8 +335,12 @@ function getPositivesCount(arr) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const numArr = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+
+  const a = arr.map((item) => numArr.indexOf(item));
+  const b = a.sort((x, y) => x - y).map((item) => numArr[item]);
+  return b;
 }
 
 /**
@@ -524,7 +528,15 @@ function distinct(arr) {
  */
 function group(array, keySelector, valueSelector) {
   const map = new Map();
-  array.forEach((item) => map.set(keySelector(item), [valueSelector(item)]));
+  array.map((item) => {
+    if (!map.has(keySelector(item))) {
+      map.set(keySelector(item), [valueSelector(item)]);
+    } else {
+      const key = map.get(keySelector(item));
+      key.push(valueSelector(item));
+    }
+    return item;
+  });
   return map;
 }
 
@@ -542,8 +554,8 @@ function group(array, keySelector, valueSelector) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.reduce((curr, acc) => curr.concat(childrenSelector(acc)), []);
 }
 
 
@@ -559,8 +571,8 @@ function selectMany(/* arr, childrenSelector */) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  return indexes.reduce((curr, acc) => curr[acc], arr);
 }
 
 
@@ -582,8 +594,20 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const count = Math.floor(arr.length / 2);
+  const first = arr.slice(0, count);
+  let last = arr.slice(count);
+
+  if (arr.length % 2 !== 0) {
+    last = arr.slice(count + 1);
+    const cen = arr.slice(count, count + 1);
+
+    return last.concat(cen, first);
+  } if (arr.length === 2) {
+    return arr.reverse();
+  }
+  return [...last, ...first];
 }
 
 

@@ -396,8 +396,12 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  // eslint-disable-next-line no-unused-vars
+  const arr = new Array(m1.length).fill(0).map((item) => new Array(m2[0].length).fill(0));
+
+  // eslint-disable-next-line max-len
+  return arr.map((row, indx) => row.map((value, indx2) => m1[indx].reduce((sum, e, c) => sum + (e * m2[c][indx2]), 0)));
 }
 
 
